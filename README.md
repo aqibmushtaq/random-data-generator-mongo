@@ -3,7 +3,7 @@ random-data-generator-mongo
 
 Generates and inserts random data into mongodb
 
-You configuartion
+Your configuartion
 -----------------
 Add a file named config.json in the project root with the following contents. Replace with your
 details.
