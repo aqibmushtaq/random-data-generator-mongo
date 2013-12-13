@@ -1,8 +1,10 @@
-var log4js = require('log4js');
-var fs = require('fs');
-var MongoClient = require('mongodb').MongoClient;
+require("nodefly-v8-profiler");
 
-var Generator = require('./generator');
+var log4js = require("log4js");
+var fs = require("fs");
+var MongoClient = require("mongodb").MongoClient;
+
+var Generator = require("./generator");
 
 // Setup logger
 log4js.configure({
@@ -16,7 +18,7 @@ log4js.configure({
   ]
 });
 var log = log4js.getLogger("app")
-log.setLevel("TRACE");
+log.setLevel("ERROR");
 
 var config = fs.readFileSync("./config.json", "utf8", function(err, data) {
   if (err) {
@@ -43,17 +45,16 @@ MongoClient.connect(connStr, function(err, db) {
 
     var collection = db.collection("stress_test");
 
-    for (var i = 0; i < 100; i++) {
-      var gen = new Generator();
-      var size = 100;
+    var gen = new Generator();
+    var size = 100;
+    for (var i = 0; i < 10000; i++) {
       var data = gen.getData(size);
-      for (var j = 0; j < size; j++)
-        log.trace("Generated data: " + data[j].word);
-        collection.insert(data, function(err, docs) {
-          if (err)
-            log.error("Failed to insert document: " + JSON.stringify(docs))
-        });
+      collection.insert(data, function(err, docs) {
+        if (err)
+          log.error("Failed to insert document: " + JSON.stringify(docs))
+      });
     }
+
 
     db.close();
     
