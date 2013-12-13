@@ -1,0 +1,13 @@
+{
+  "name": "random-data-generator-mongo",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "log4js": "*",
+    "mongodb": "*",
+    "nodefly-v8-profiler": "*"
+  }
+}
